@@ -3,8 +3,11 @@ import Unit1.StudentFunctionalInterface;
 import Unit1.StudentResultImpl;
 import Unit1.StudentResultInterface;
 
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -21,6 +24,9 @@ public class Main {
         s.createResult(student1);
         s.createResult(student3);
         s.createResult(student4);
+        s.createResult(student5);
+        s.createResult(student6);
+        s.createResult(student7);
 
         System.out.println("--------------- Default Methods ---------");
         // abstract methods
@@ -66,8 +72,27 @@ public class Main {
         List<Student> newFilteredList = (ArrayList<Student>) studentArrayList1.stream().filter(predicate).collect(Collectors.toList());
         // we can aso write it as
         //List<Student> newFilteredList = (ArrayList<Student>) studentArrayList1.stream().filter(student -> student.getAge()>12).collect(Collectors.toList());
-
         newFilteredList.forEach(student -> System.out.println(student.getName()));
+
+        System.out.println("------------- Supplier Interface Code -----------------");
+        // using Supplier Interface to check the student is pass or fail
+        Supplier<Boolean> supplier = ()-> student5.getPercentage()>40;
+        System.out.println(student5.getName() + " = "+supplier.get());
+        Supplier<LocalDateTime> localDateTimeSupplier = () -> LocalDateTime.now();
+        System.out.println("Current Time = "+localDateTimeSupplier.get().toLocalTime());
+
+        System.out.println("------------- Consumer Interface Code -----------------");
+
+        var marksList = student5.getSubjectMarks();
+        // using consumer Interface to calculate total marks of the students
+        Consumer<List<Integer>> consumer = list ->{
+            int totalMarks = list.stream()
+                    .mapToInt(Integer::intValue)
+                    .sum();
+            System.out.println(student5.getName()+" has got "+totalMarks+" marks");
+        };
+        // calling consumer method
+        consumer.accept(student5.getSubjectMarks());
 
     }
 }
