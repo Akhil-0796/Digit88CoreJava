@@ -13,6 +13,15 @@ public class Student {
     private String MotherName;
     private int age;
 
+    public Student(int id, String name, List<Integer> subjectMarks, String fatherName, String motherName, int age) {
+        this.id = id;
+        this.name = name;
+        this.subjectMarks = subjectMarks;
+        this.fatherName = fatherName;
+        MotherName = motherName;
+        this.age = age;
+    }
+
     public Student(int id, String fatherName, String motherName, int age) {
         this.id = id;
         this.fatherName = fatherName;

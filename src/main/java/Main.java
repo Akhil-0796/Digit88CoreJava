@@ -4,19 +4,25 @@ import Unit1.StudentResultImpl;
 import Unit1.StudentResultInterface;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         Student student1 = new Student(101, "Arjun", List.of(47, 50, 76, 89, 98));
-        Student student2 = new Student(102, "Ramesh", "Shakuntala", 16);
+        Student student2 = new Student(102,"student2", List.of(45, 65, 70, 25, 98),"Ramesh", "Shakuntala", 16);
         Student student3 = new Student(103, "Rakesh", List.of(45, 65, 70, 25, 98));
         Student student4 = new Student(104, "Jimmy", List.of(47, 56, 76, 89, 98));
+        Student student5 = new Student(102,"student5",List.of(45, 65, 70, 25, 98), "Ryan", "mother1", 13);
+        Student student6 = new Student(102,"student6",List.of(45, 65, 70, 25, 98), "Sher", "mother2", 12);
+        Student student7 = new Student(102,"student7",List.of(45, 65, 70, 25, 98), "Rajesh", "mother3", 17);
 
         StudentResultImpl s = new StudentResultImpl();
         s.createResult(student1);
         s.createResult(student3);
         s.createResult(student4);
 
+        System.out.println("--------------- Default Methods ---------");
         // abstract methods
         System.out.println("Total Marks = " + s.totalMarks(student1));
         System.out.println("Tota Percentage = " + s.totalPercentage(student1));
@@ -26,13 +32,14 @@ public class Main {
         // direct calling of static methods
         StudentResultInterface.printDetailsOfStudent(student1);
 
+        System.out.println("--------- Lambda Expressions ------------------");
         // lambda expression to define personalDetailsOfStudent method
         StudentFunctionalInterface studentFunctionalInterface = (student -> System.out.println("Age = " + student.getAge()));
 
         // calling personalDetailsOfStudent
         studentFunctionalInterface.personalDetailsOfStudent(student2);
 
-
+        System.out.println("------------ Comparator with Lambdas -------------");
         // Comparator Interface
         ArrayList<Student> studentArrayList = new ArrayList<>(List.of(student1, student3, student4));
 
@@ -48,6 +55,19 @@ public class Main {
             System.out.println("Name = " + it.getName());
             System.out.println("Name = " + it.getTotalMarks());
         }
+
+        System.out.println("-------------Predicate Code -----------------");
+        // use of predicate to find out the students whose age is greater than 14
+        List<Student> studentArrayList1 = (List.of(student2, student5, student6,student7));
+
+        // defining the Predicate
+        Predicate<Student> predicate = student -> student.getAge()>12;
+
+        List<Student> newFilteredList = (ArrayList<Student>) studentArrayList1.stream().filter(predicate).collect(Collectors.toList());
+        // we can aso write it as
+        //List<Student> newFilteredList = (ArrayList<Student>) studentArrayList1.stream().filter(student -> student.getAge()>12).collect(Collectors.toList());
+
+        newFilteredList.forEach(student -> System.out.println(student.getName()));
 
     }
 }

@@ -13,11 +13,9 @@ public interface StudentResultInterface {
 
     // interface methods can hold static methods
      static void printDetailsOfStudent(Student student){
-         System.out.println("----------------------------------");
          System.out.println("Name        : "+student.getName());
          System.out.println("Total Marks : "+student.getTotalMarks());
          System.out.println("Percentage  : "+student.getPercentage());
-         System.out.println("----------------------------------");
      }
 
     void createResult(Student student);
